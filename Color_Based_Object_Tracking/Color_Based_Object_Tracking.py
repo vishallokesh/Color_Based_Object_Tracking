@@ -1,5 +1,4 @@
 
-from tkinter import Y
 import cv2
 import math
 import pyfirmata
@@ -12,6 +11,12 @@ cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 pin_9 = board.digital[9]
 pin_9.mode = pyfirmata.SERVO
+pin_10 = board.digital[10]
+pin_10.mode = pyfirmata.SERVO
+pin_11 = board.digital[11]
+pin_11.mode = pyfirmata.SERVO
+pin_12 = board.digital[12]
+pin_12.mode = pyfirmata.SERVO
 while True:
     ret, frame = cap.read()
 
@@ -44,7 +49,12 @@ while True:
         xServo = 0
         yServo = 0
     print('x is', xServo, 'distance away ad y is', yServo, 'distance away');
-    pin_9.write((xServo*100)+100)
+    xServoValue = (xServo*100)+100
+    yServoValue = (yServo*100)+100
+    pin_9.write(xServoValue)
+    pin_10.write(xServoValue)
+    pin_11.write(yServoValue)
+    pin_12.write(yServoValue)
     cv2.imshow('frame', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
